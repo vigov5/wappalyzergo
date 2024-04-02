@@ -123,7 +123,11 @@ func (v *versionRegex) MatchString(value string) (bool, string) {
 	var version string
 	if v.group > 0 {
 		for _, match := range matches {
-			version = match[v.group]
+			if len(match) > v.group {
+				version = match[v.group]
+			} else {
+				fmt.Printf("Bad regex: %s\n", v.regex)
+			}
 		}
 	}
 	return true, version
